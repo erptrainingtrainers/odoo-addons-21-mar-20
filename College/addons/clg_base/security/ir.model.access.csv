@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_clg_student_user,clg_student,model_clg_student,base.group_user,1,1,1,1
+access_clg_department_user,clg_department,model_clg_department,base.group_user,1,1,1,1

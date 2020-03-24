@@ -10,8 +10,23 @@
 						<group>
 							<group>
 								<field name="name" />
+								<field name="last_name" />
+								<field name="gender" widget="radio"/>
+								<field name="admitted_date" />
+								<field name="tc_12" />
+							</group>
+							<group>
+								<field name="dob" required="1"/>
+								<field name="age" />
+								<field name="remarks" />
+								<field name="image_1920" widget="image" class="oe_avatar" options='{"preview_image": "image_128"}'/>
 							</group>
 						</group>
+						<notebook>
+							<page name="description" string="Description">
+								<field name="description" />								
+							</page>
+						</notebook>
 					</sheet>
 				</form>
 			</field>
@@ -23,6 +38,8 @@
             <field name="arch" type="xml">
                 <tree string="Student">
                     <field name="name"/>
+                    <field name="last_name" />
+					<field name="gender" />
                 </tree>
             </field>
         </record>
@@ -36,6 +53,48 @@
                 Add a new Student
               </p><p>
                 You will get all the student information here.
+              </p>
+            </field>
+        </record>
+        
+        <!-- Department -->
+        <record id="view_department_form" model="ir.ui.view">
+			<field name="name">clg.department.form</field>
+			<field name="model">clg.department</field>
+			<field name="arch" type="xml">
+				<form string="Department">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="code" />
+								<field name="abbreviation" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_department_list" model="ir.ui.view">
+            <field name="name">clg.department.list</field>
+            <field name="model">clg.department</field>
+            <field name="arch" type="xml">
+                <tree string="Department">
+                    <field name="name"/>
+                    <field name="code" />
+					<field name="abbreviation" />
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_department_form" model="ir.actions.act_window">
+            <field name="name">Department</field>
+            <field name="res_model">clg.department</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Add a new Department
               </p>
             </field>
         </record>
