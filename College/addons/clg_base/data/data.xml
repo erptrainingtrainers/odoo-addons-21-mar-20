@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="data_hindi" model="clg.language">
+			<field name="name">HINDI</field>
+		</record>
+		
+		<record id="data_urudu" model="clg.language">
+			<field name="name">Urudu</field>
+		</record>
+	</data>
+</odoo>
