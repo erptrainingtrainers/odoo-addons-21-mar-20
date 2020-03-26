@@ -11,9 +11,12 @@
 							<group>
 								<field name="name" />
 								<field name="last_name" />
-								<field name="gender" widget="radio"/>
+								<field name="gender" widget="radio" options="{'horizontal':True}"/>
 								<field name="admitted_date" />
 								<field name="tc_12" />
+								<field name="height" />
+								<field name="department_id" options="{'no_create_edit':True,'no_create':True,'no_open':True}"/>
+								<field name="language_ids" widget="many2many_tags"/>
 							</group>
 							<group>
 								<field name="dob" required="1"/>
@@ -25,6 +28,25 @@
 						<notebook>
 							<page name="description" string="Description">
 								<field name="description" />								
+							</page>
+							<page name="education" string="Education">
+								<field name="education_ids" >
+									<tree>
+										<field name="mode" invisible="1"/>
+										<field name="level" />
+										<field name="program" />
+									</tree>
+									<form>
+										<group>
+											<field name="mode" />
+											<field name="level" />
+											<field name="program" />
+										</group>
+									</form>
+								</field>
+							</page>
+							<page name="attachments" string="Attachments">
+								<field name="attachment_ids" widget="many2many_binary"/>
 							</page>
 						</notebook>
 					</sheet>
