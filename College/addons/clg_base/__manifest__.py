@@ -9,10 +9,12 @@
     'description': "Training",
     'depends': [
     ],
+    'demo':[],
     'data': [
         'security/ir.model.access.csv',
         'views/student_views.xml',
         'views/menus.xml',
+        'data/data.xml',
     ],
     'qweb':[],
     'images': [],

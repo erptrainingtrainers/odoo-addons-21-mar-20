@@ -19,6 +19,8 @@ class Student(models.Model):
     language_ids = fields.Many2many('clg.language',string="Languages known")
     education_ids = fields.One2many('stud.education','student_id',string="Education Details",help="Previous Education Details")
     attachment_ids = fields.Many2many('ir.attachment',string="Attachment")
+    edu_id = fields.Many2one('stud.education',string='Education')
+    country_id = fields.Many2one('res.country',string="Country")
     
 class Department(models.Model):
     _name = "clg.department"
@@ -37,6 +39,7 @@ class Languages(models.Model):
 class Education(models.Model):
     _name = 'stud.education'
     _description = "Education"
+    _rec_name = "program"
     
     student_id = fields.Many2one('clg.student')
     level = fields.Char(string="Level")
