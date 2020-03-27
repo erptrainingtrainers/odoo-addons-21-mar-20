@@ -7,7 +7,7 @@
     'author': 'Training',
     'summary': 'Training',
     'description': "Training",
-    'depends': [
+    'depends': ['mail'
     ],
     'demo':[],
     'data': [

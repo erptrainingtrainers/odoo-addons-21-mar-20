@@ -52,6 +52,11 @@
 							</page>
 						</notebook>
 					</sheet>
+					<div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
 				</form>
 			</field>
 		</record>
@@ -139,6 +144,14 @@
 			<field name="arch" type="xml">
 				<form string="Department">
 					<sheet>
+						<div name="button_box" class="oe_button_box">
+							<button class="oe_stat_button" name="open_dept_students"
+                      				type="object" icon="fa-users">
+                                <field string="Students" name="students_count" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" name="%(action_student_form)d" context="{'default_department_id':active_id,'search_default_department_id':active_id}"
+                                string="Students(act)" type="action" icon="fa-eye"/> 
+						</div>
 						<group>
 							<group>
 								<field name="name" />
@@ -159,6 +172,7 @@
                     <field name="name"/>
                     <field name="code" />
 					<field name="abbreviation" />
+					<field name="students_count" string="Total Students"/>
                 </tree>
             </field>
         </record>
