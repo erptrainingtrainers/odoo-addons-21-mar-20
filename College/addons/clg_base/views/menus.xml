@@ -5,6 +5,7 @@
 		<menuitem id="menu_action_college" name="College" sequence="1"/>
 		<menuitem parent="menu_action_college" name="Student" action="action_student_form" id="menu_action_student_form" sequence="1"/>
 		<menuitem parent="menu_action_college" id="menu_action_department" name="Department" action="action_department_form" />
-	
+		
+		<menuitem parent="menu_action_college" name="Staff" action="action_staff_form" id="menu_action_staff_form" sequence="2"/>
 	</data>
 </odoo>

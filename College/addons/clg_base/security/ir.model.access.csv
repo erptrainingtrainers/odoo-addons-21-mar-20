@@ -3,3 +3,4 @@ access_clg_student_user,clg_student,model_clg_student,base.group_user,1,1,1,1
 access_clg_department_user,clg_department,model_clg_department,base.group_user,1,1,1,1
 access_clg_language_user,clg_language,model_clg_language,base.group_user,1,1,1,1
 access_stud_education_user,stud_education,model_stud_education,base.group_user,1,1,1,1
+access_clg_staff_user,clg_staff,model_clg_staff,base.group_user,1,1,1,1

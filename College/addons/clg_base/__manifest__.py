@@ -7,12 +7,13 @@
     'author': 'Training',
     'summary': 'Training',
     'description': "Training",
-    'depends': ['mail'
+    'depends': ['mail','base'
     ],
     'demo':[],
     'data': [
         'security/ir.model.access.csv',
         'views/student_views.xml',
+        'views/staff_views.xml',
         'views/menus.xml',
         'data/data.xml',
     ],
