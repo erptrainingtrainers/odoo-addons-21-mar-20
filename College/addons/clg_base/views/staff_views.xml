@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_staff_form" model="ir.ui.view">
+			<field name="name">clg.staff.form</field>
+			<field name="model">clg.staff</field>
+			<field name="arch" type="xml">
+				<form string="Staff">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="last_name" />
+								<field name="gender" widget="radio" options="{'horizontal':True}"/>
+								<field name="department_id" options="{'no_create_edit':True,'no_create':True,'no_open':True}"/>
+								<field name="language_ids" widget="many2many_tags"/>
+							</group>
+							<group>
+								<field name="dob" required="1"/>
+								<field name="email" widget="email"/>
+								<field name="mobile" widget="phone"/>
+								<field name="student_id" />
+								<!-- <field name="partner_id" /> -->
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_staff_list" model="ir.ui.view">
+            <field name="name">clg.staff.list</field>
+            <field name="model">clg.staff</field>
+            <field name="arch" type="xml">
+                <tree string="Staff">
+                    <field name="name"/>
+                    <field name="last_name" />
+					<field name="gender" />
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_staff_form" model="ir.actions.act_window">
+            <field name="name">Staff</field>
+            <field name="res_model">clg.staff</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Add a new Staff
+              </p><p>
+                You will get all the staff information here.
+              </p>
+            </field>
+        </record>
+        
+     </data>
+</odoo>
