@@ -7,6 +7,7 @@
 			<field name="arch" type="xml">
 				<form string="Student">
 					<header>
+						<button name="get_details" string="Get Details" type="object" />
 						<button name="draft_to_admit" string="Admit" type="object" states="draft" class="oe_highlight" />
 						<button name="admit_to_completed" string="Complete" type="object" states="admitted" class="oe_highlight" />
 						<button name="admit_to_dis_continue" string="Dis-Continue" type="object" states="admitted" class="oe_highlight" />
@@ -140,6 +141,7 @@
             <field name="name">Student</field>
             <field name="res_model">clg.student</field>
             <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'label':'Serial No.'}</field>
             <field name="help" type="html">
               <p class="o_view_nocontent_smiling_face">
                 Add a new Student

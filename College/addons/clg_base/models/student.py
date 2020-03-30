@@ -2,6 +2,7 @@ from odoo import api, fields, models, _
 from datetime import datetime
 from odoo.exceptions import UserError
 from odoo.osv import expression
+from lxml import etree
 
 class Student(models.Model):
     _name = "clg.student"
@@ -19,6 +20,22 @@ class Student(models.Model):
         result['user_id'] = self.env.user.id
         return result
     
+    @api.model
+    def fields_get(self,fields=None,attributes=None):
+        result = super(Student,self).fields_get(fields,attributes)
+        return result
+    
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', context=None, toolbar=False,submenu=False):    
+        result = super(Student, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+        if view_type in ['form','tree']:
+            doc = etree.XML(result['arch'])
+            if self._context.get('label',False):
+                for node in doc.xpath("//field[@name='roll_no']"):
+                    node.set('string', self._context.get('label'))
+            result['arch'] = etree.tostring(doc)
+        return result
+    
     name = fields.Char(string="First Name",required=True,tracking=True,index=True,size=15)
     last_name = fields.Char(string="Last Name",tracking=True)
     roll_no = fields.Char(string="Roll No.",required=True)
@@ -28,7 +45,7 @@ class Student(models.Model):
     age = fields.Integer(string="Age")
     admitted_date = fields.Datetime(string="Admitted Date and time",tracking=True,default=fields.Datetime.now())
     tc_12 = fields.Binary(string="12th TC")
-    remarks = fields.Text(string="Remarks",tracking=True,readonly=True)
+    remarks = fields.Text(string="Remarks",tracking=True,readonly=False)
     description = fields.Html(string="Description")
     department_id = fields.Many2one('clg.department',string="Department",ondelete="set null",tracking=True)
     language_ids = fields.Many2many('clg.language',string="Languages known",domain=[('name','=','English')])
@@ -36,7 +53,7 @@ class Student(models.Model):
     attachment_ids = fields.Many2many('ir.attachment',string="Attachment")
     edu_id = fields.Many2one('stud.education',string='Education')
     country_id = fields.Many2one('res.country',string="Country")
-    lang_known_count = fields.Integer(compute="_compute_lang_known_count",string='Lang known count',store=True)
+    lang_known_count = fields.Integer(compute="_compute_lang_known_count",inverse="_inverse_change_remarks",string='Lang known count',store=False)
     state = fields.Selection([('draft','Draft'),('admitted','Admitted'),('completed','Completed'),('dis-continue','Dis-Continue')],string="State",tracking=True)
     user_id = fields.Many2one('res.users',string="User")
     
@@ -78,6 +95,9 @@ class Student(models.Model):
         if self.language_ids:
             self.lang_known_count = len(self.language_ids)
     
+    def _inverse_change_remarks(self):
+        self.remarks = self.remarks.upper()
+    
     def draft_to_admit(self):
         self.state = 'admitted'
         
@@ -86,6 +106,17 @@ class Student(models.Model):
         
     def admit_to_dis_continue(self):
         self.state = 'dis-continue'
+    
+    def get_details(self):
+        print(self.search([]))
+        print(self.search([],order="roll_no asc",limit=4))
+        print("Mapped function")
+        print(self.search([]).mapped('name'))
+        print("Sorted")
+        print(self.search([]).sorted(lambda id:id.name,reverse=True).mapped('name'))
+        print("Filtered")
+        print(self.search([]).filtered(lambda id:id.gender == 'male'))
+        
     
     @api.model
     def create(self,vals):
@@ -101,9 +132,9 @@ class Student(models.Model):
             vals['name'] = name.upper()
         if last_name:
             vals['last_name'] = last_name.upper()
-        if vals.get('last_name',False):
-            if vals.get('last_name',False) != self.last_name:
-                raise UserError(_("Sorry! You cannot update the last name."))
+#         if vals.get('last_name',False):
+#             if vals.get('last_name',False) != self.last_name:
+#                 raise UserError(_("Sorry! You cannot update the last name."))
         student = super(Student,self).write(vals)
         return student
     

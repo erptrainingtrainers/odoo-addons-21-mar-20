@@ -20,6 +20,7 @@
 								<field name="email" widget="email"/>
 								<field name="mobile" widget="phone"/>
 								<field name="student_id" />
+								<field name="stud_remarks" />
 								<!-- <field name="partner_id" /> -->
 							</group>
 						</group>

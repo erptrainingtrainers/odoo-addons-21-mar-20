@@ -14,3 +14,4 @@ class Staff(models.Model):
     language_ids = fields.Many2many('clg.language',string="Languages known")
     partner_id = fields.Many2one('res.partner',string="Contact")
     student_id = fields.Many2one('clg.student',string="Student")
+    stud_remarks = fields.Text(related="student_id.remarks",string="Student Remarks")
