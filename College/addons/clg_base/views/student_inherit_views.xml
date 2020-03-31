@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="view_student_form_inherited" model="ir.ui.view">
+			<field name="name">clg.student.form.inherited</field>
+			<field name="model">clg.student</field>
+			<field name="inherit_id" ref="clg_base.view_student_form"/>
+			<field name="arch" type="xml">
+				<field name="country_id" position="after">
+					<field name="tenth_mark" />
+				</field>
+				<xpath expr="//field[@name='email']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='tc_12']" position="replace"></xpath>
+			</field>
+		</record>
+		
+	</data>
+</odoo>

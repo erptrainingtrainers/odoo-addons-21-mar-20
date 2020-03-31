@@ -42,13 +42,13 @@ class Student(models.Model):
     gender = fields.Selection([('male','Male'),('female','Female'),('other','Other')],string="Gender",default='male')
     dob = fields.Date(string="Date of Birth",tracking=True)
     height = fields.Float(string="height")
-    age = fields.Integer(string="Age")
+    age = fields.Integer(string="Age",group_operator=False)
     admitted_date = fields.Datetime(string="Admitted Date and time",tracking=True,default=fields.Datetime.now())
     tc_12 = fields.Binary(string="12th TC")
     remarks = fields.Text(string="Remarks",tracking=True,readonly=False)
     description = fields.Html(string="Description")
     department_id = fields.Many2one('clg.department',string="Department",ondelete="set null",tracking=True)
-    language_ids = fields.Many2many('clg.language',string="Languages known",domain=[('name','=','English')])
+    language_ids = fields.Many2many('clg.language',string="Languages known",domain=[])
     education_ids = fields.One2many('stud.education','student_id',string="Education Details",help="Previous Education Details")
     attachment_ids = fields.Many2many('ir.attachment',string="Attachment")
     edu_id = fields.Many2one('stud.education',string='Education')
@@ -56,6 +56,7 @@ class Student(models.Model):
     lang_known_count = fields.Integer(compute="_compute_lang_known_count",inverse="_inverse_change_remarks",string='Lang known count',store=False)
     state = fields.Selection([('draft','Draft'),('admitted','Admitted'),('completed','Completed'),('dis-continue','Dis-Continue')],string="State",tracking=True)
     user_id = fields.Many2one('res.users',string="User")
+    tenth_mark = fields.Integer(string="10th Mark")
     
     def name_get(self):
         result = []
@@ -92,17 +93,26 @@ class Student(models.Model):
             
     @api.depends('language_ids')
     def _compute_lang_known_count(self):
+        self.lang_known_count = False
         if self.language_ids:
             self.lang_known_count = len(self.language_ids)
     
     def _inverse_change_remarks(self):
-        self.remarks = self.remarks.upper()
+        if self.remarks:
+            self.remarks = self.remarks.upper()
     
     def draft_to_admit(self):
         self.state = 'admitted'
         
     def admit_to_completed(self):
         self.state = 'completed'
+        return {
+            'effect':{
+                'fadeout':'slow',
+                'message':'You have completed your Degree',
+                'type': 'rainbow_man'
+                }
+            }
         
     def admit_to_dis_continue(self):
         self.state = 'dis-continue'
@@ -128,6 +138,10 @@ class Student(models.Model):
     def write(self,vals):
         name = vals.get('name',False) or self.name
         last_name = vals.get('last_name',False) or self.last_name
+        if vals.get('state',False):
+            if not vals.get('state') == 'admitted':
+                raise UserError(_("Sorry! You can complete this from Admitted state only."))
+        
         if name:
             vals['name'] = name.upper()
         if last_name:
@@ -171,7 +185,8 @@ class Languages(models.Model):
     _name = 'clg.language'
     _description = "Language"
     
-    name = fields.Char(string="Name")
+    name = fields.Char(string="Name",required=True)
+    color = fields.Integer('Color Index')
     
 class Education(models.Model):
     _name = 'stud.education'
