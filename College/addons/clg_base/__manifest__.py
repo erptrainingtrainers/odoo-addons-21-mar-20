@@ -11,6 +11,7 @@
     ],
     'demo':[],
     'data': [
+        'security/college_security.xml',
         'security/ir.model.access.csv',
         'views/student_views.xml',
         'views/student_inherit_views.xml',

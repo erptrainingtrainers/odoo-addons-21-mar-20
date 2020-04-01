@@ -9,8 +9,8 @@
 					<header>
 						<button name="get_details" string="Get Details" type="object" />
 						<button name="draft_to_admit" string="Admit" type="object" states="draft" class="oe_highlight" />
-						<button name="admit_to_completed" string="Complete" type="object" states="admitted" class="oe_highlight" />
-						<button name="admit_to_dis_continue" string="Dis-Continue" type="object" states="admitted" class="oe_highlight" />
+						<button name="admit_to_completed" string="Complete" type="object" states="admitted" class="oe_highlight" groups="clg_base.group_clg_manager"/>
+						<button name="admit_to_dis_continue" string="Dis-Continue" type="object" states="admitted" class="oe_highlight" groups="clg_base.group_clg_manager"/>
 						<field name="state" widget="statusbar" statusbar_visible="draft,admitted,completed,dis-continue"/>
 					</header>
 					<sheet>
@@ -222,7 +222,7 @@
 			<field name="name">clg.department.form</field>
 			<field name="model">clg.department</field>
 			<field name="arch" type="xml">
-				<form string="Department" duplicate="0" edit="0" delete="0" create="0">
+				<form string="Department" >
 					<sheet>
 						<div name="button_box" class="oe_button_box">
 							<button class="oe_stat_button" name="open_dept_students"

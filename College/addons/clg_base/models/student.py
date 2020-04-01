@@ -45,7 +45,7 @@ class Student(models.Model):
     age = fields.Integer(string="Age",group_operator=False)
     admitted_date = fields.Datetime(string="Admitted Date and time",tracking=True,default=fields.Datetime.now())
     tc_12 = fields.Binary(string="12th TC")
-    remarks = fields.Text(string="Remarks",tracking=True,readonly=False)
+    remarks = fields.Text(string="Remarks",tracking=True,readonly=False,groups="clg_base.group_clg_manager")
     description = fields.Html(string="Description")
     department_id = fields.Many2one('clg.department',string="Department",ondelete="set null",tracking=True)
     language_ids = fields.Many2many('clg.language',string="Languages known",domain=[])

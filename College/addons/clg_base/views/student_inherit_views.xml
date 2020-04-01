@@ -17,5 +17,49 @@
 			</field>
 		</record>
 		
+        <record id="view_student2_list" model="ir.ui.view">
+            <field name="name">clg.student2.list</field>
+            <field name="model">clg.student</field>
+            <field name="inherit_id" ref="clg_base.view_student_list"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+            	<field name="roll_no" position="replace"/>
+            	<field name="state" position="after">
+					<field name="email" />
+					<field name="mobile" />
+				</field>
+            </field>
+        </record>	
+		
+		<record id="view_student3_list" model="ir.ui.view">
+            <field name="name">clg.student3.list</field>
+            <field name="model">clg.student</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+            	<tree>
+	            	<field name="roll_no"/>
+					<field name="email" />
+					<field name="mobile" />
+				</tree>
+            </field>
+        </record>	
+		
+		<record id="action_student1_form" model="ir.actions.act_window">
+            <field name="name">Student</field>
+            <field name="res_model">clg.student</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_student_search"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_student2_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_student_form')})]"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Add a new Student
+              </p><p>
+                You will get all the student information here.
+              </p>
+            </field>
+        </record>
+		
 	</data>
 </odoo>
