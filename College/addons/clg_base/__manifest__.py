@@ -16,6 +16,7 @@
         'views/student_views.xml',
         'views/student_inherit_views.xml',
         'views/staff_views.xml',
+        'views/res_users_view.xml',
         'views/menus.xml',
         'data/data.xml',
     ],

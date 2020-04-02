@@ -23,4 +23,34 @@
 		<field name="implied_ids" eval="[(4, ref('clg_base.group_clg_manager'))]" />
 	</record>
 	
+	<!-- Record Rules -->
+	<record model="ir.rule" id="user_own_student_rule">
+         <field name="name">Own department students</field>
+         <field name="model_id" ref="model_clg_student"/>
+         <field name="domain_force">[('department_id','=', user.department_id.id)]</field>
+         <field name="groups" eval="[(4, ref('clg_base.group_clg_user'))]"/>
+         <field name="perm_read" eval="True"/>
+         <field name="perm_write" eval="True"/>
+         <field name="perm_create" eval="True"/>
+         <field name="perm_unlink" eval="False"/>
+     </record>
+     
+     <record model="ir.rule" id="user_read_other_dept_student_rule">
+         <field name="name">Read -Other department students</field>
+         <field name="model_id" ref="model_clg_student"/>
+         <field name="domain_force">[('department_id','!=', user.department_id.id)]</field>
+         <field name="groups" eval="[(4, ref('clg_base.group_clg_user'))]"/>
+         <field name="perm_read" eval="True"/>
+          <field name="perm_write" eval="False"/>
+          <field name="perm_create" eval="False"/>
+          <field name="perm_unlink" eval="False"/>
+     </record>
+     
+     <!-- <record model="ir.rule" id="user_own_dept_rule">
+         <field name="name">Own department</field>
+         <field name="model_id" ref="model_clg_department"/>
+         <field name="domain_force">[('id','=', user.department_id.id)]</field>
+     </record> -->
+	
+	
 </odoo>
