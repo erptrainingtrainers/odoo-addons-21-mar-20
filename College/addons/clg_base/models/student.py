@@ -3,6 +3,7 @@ from datetime import datetime
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from lxml import etree
+from odoo.addons.base.models.ir_mail_server import MailDeliveryException
 
 class Student(models.Model):
     _name = "clg.student"
@@ -117,6 +118,29 @@ class Student(models.Model):
     def admit_to_dis_continue(self):
         self.state = 'dis-continue'
     
+    def action_send_email(self):
+        template_id = self.env.ref('clg_base.email_template_clg_student')
+        try:
+            template_id.send_mail(self.id,force_send=True)
+        except MailDeliveryException:
+            print("MailDeliveryException")
+        except Exception:
+            print("Exception")
+    
+    def action_move_to_admit(self):
+        print(self._context.get('active_ids',False))
+        record_ids = self._context.get('active_ids',False)
+        records = self.search([('id','in',record_ids),('state','=','draft')])
+        print(records)
+        for rec in records:
+            rec.write({'state':'admitted'})
+        title = _("Student Admission!")
+        message = _("Only draft records moved to admitted!")
+        self.env['bus.bus'].sendone(
+            (self._cr.dbname, 'res.partner', self.env.user.partner_id.id),
+            {'type': 'simple_notification', 'title': title, 'message': message, 'sticky': True, 'warning': True})
+        
+    
     def get_details(self):
         print(self.search([]))
         print(self.search([],order="roll_no asc",limit=4))
@@ -132,15 +156,15 @@ class Student(models.Model):
     def create(self,vals):
 #         vals['state'] = 'admitted'
         student = super(Student,self).create(vals)
-        student.state = 'admitted'
+        student.state = 'draft'
         return student
     
     def write(self,vals):
         name = vals.get('name',False) or self.name
         last_name = vals.get('last_name',False) or self.last_name
-        if vals.get('state',False):
-            if not vals.get('state') == 'admitted':
-                raise UserError(_("Sorry! You can complete this from Admitted state only."))
+#         if vals.get('state',False):
+#             if not vals.get('state') == 'admitted':
+#                 raise UserError(_("Sorry! You can complete this from Admitted state only."))
         
         if name:
             vals['name'] = name.upper()

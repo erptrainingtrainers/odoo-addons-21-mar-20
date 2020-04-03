@@ -21,7 +21,7 @@
             <field name="name">clg.student2.list</field>
             <field name="model">clg.student</field>
             <field name="inherit_id" ref="clg_base.view_student_list"/>
-            <field name="mode">primary</field>
+            <!-- <field name="mode">primary</field> -->
             <field name="arch" type="xml">
             	<field name="roll_no" position="replace"/>
             	<field name="state" position="after">
@@ -34,7 +34,7 @@
 		<record id="view_student3_list" model="ir.ui.view">
             <field name="name">clg.student3.list</field>
             <field name="model">clg.student</field>
-            <field name="priority">2</field>
+            <field name="priority">19</field>
             <field name="arch" type="xml">
             	<tree>
 	            	<field name="roll_no"/>

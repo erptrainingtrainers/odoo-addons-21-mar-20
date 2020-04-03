@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_student_remark" model="ir.ui.view">
+		<field name="name">wizard.student.remark.form</field>
+		<field name="model">wizard.student.remark</field>
+		<field name="arch" type="xml">
+			<form string="Student Remark">
+				<group>
+						<field name="remark" required="1"/>
+						<field name="student_id"/>
+				</group>
+				<footer>
+					<button name="action_confirm" string="Proceed" type="object" class="oe_highlight" />
+					or
+					<button string="CANCEL" class="oe_highlight" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	
+	<record id="action_student_remark" model="ir.actions.act_window">
+		<field name="name">Student Remark</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">wizard.student.remark</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+	
+</odoo>	

@@ -13,6 +13,8 @@
     'data': [
         'security/college_security.xml',
         'security/ir.model.access.csv',
+        'data/mail_template_data.xml',
+        'wizard/wizard_student_remark.xml',
         'views/student_views.xml',
         'views/student_inherit_views.xml',
         'views/staff_views.xml',

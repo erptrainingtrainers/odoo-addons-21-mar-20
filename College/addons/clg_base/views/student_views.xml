@@ -8,6 +8,8 @@
 				<form string="Student">
 					<header>
 						<button name="get_details" string="Get Details" type="object" />
+						<button name="%(action_student_remark)d" type="action" context="{'default_student_id':active_id}" class="oe_highlight" string="Confirm"/>
+						<button name="action_send_email" string="Send Email" type="object" icon="fa-envelope" class="oe_highlight"/>
 						<button name="draft_to_admit" string="Admit" type="object" states="draft" class="oe_highlight" />
 						<button name="admit_to_completed" string="Complete" type="object" states="admitted" class="oe_highlight" groups="clg_base.group_clg_manager"/>
 						<button name="admit_to_dis_continue" string="Dis-Continue" type="object" states="admitted" class="oe_highlight" groups="clg_base.group_clg_manager"/>
@@ -215,6 +217,15 @@
                 You will get all the student information here.
               </p>
             </field>
+        </record>
+        
+        <record id="ir_actions_server_clg_student" model="ir.actions.server">
+            <field name="name">Student: Move to Admitted</field>
+            <field name="model_id" ref="clg_base.model_clg_student"/>
+            <field name="binding_model_id" ref="clg_base.model_clg_student"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = model.action_move_to_admit()</field>
         </record>
         
         <!-- Department -->
