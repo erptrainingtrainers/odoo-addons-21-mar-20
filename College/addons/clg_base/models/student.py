@@ -58,6 +58,7 @@ class Student(models.Model):
     state = fields.Selection([('draft','Draft'),('admitted','Admitted'),('completed','Completed'),('dis-continue','Dis-Continue')],string="State",tracking=True)
     user_id = fields.Many2one('res.users',string="User")
     tenth_mark = fields.Integer(string="10th Mark")
+    admission_no = fields.Char(string="Admission No")
     
     def name_get(self):
         result = []
@@ -151,10 +152,18 @@ class Student(models.Model):
         print("Filtered")
         print(self.search([]).filtered(lambda id:id.gender == 'male'))
         
-    
+    def open_new_url(self):
+        return {
+            "type": "ir.actions.act_url",
+            "url": "https://google.com",
+            "target": "new",
+        }
+        
     @api.model
     def create(self,vals):
 #         vals['state'] = 'admitted'
+        sequence_code = 'student.admission.number'
+        vals['admission_no'] = self.env['ir.sequence'].next_by_code(sequence_code)
         student = super(Student,self).create(vals)
         student.state = 'draft'
         return student

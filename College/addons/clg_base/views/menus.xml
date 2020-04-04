@@ -8,5 +8,10 @@
 		
 		<menuitem parent="menu_action_college" name="Student 1" action="action_student1_form" id="menu_action_student1_form" sequence="3" />
 		<menuitem parent="menu_action_college" name="Staff" action="action_staff_form" id="menu_action_staff_form" sequence="2"/>
+		
+		<!-- Reports wizard -->
+		<menuitem parent="menu_action_college" name="Reports" id="menu_report_student" sequence="7"/>
+		<menuitem parent="menu_report_student" name="Student" action="action_student_report" id="menu_report_student_details" sequence="1"/>
+		
 	</data>
 </odoo>

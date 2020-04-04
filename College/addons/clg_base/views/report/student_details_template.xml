@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="report_student_details">
+    	<t t-call="web.html_container">
+    		<t t-foreach="docs" t-as="o">
+    			<div class="page">
+    				<style type="text/css">
+    					.table tr,table td,table th{
+    						text-align: left;
+    					}
+    					span, p {
+    						font-size:18px;
+    					}
+    					tr {
+							page-break-inside: avoid;
+						}
+    				</style>
+    				<div class="oe_structure"/>
+    				<center><h1>Student Details Report</h1></center>
+    				<hr/>
+    				<div class="row">
+    				<div width="60%" style="float:left">
+    					<table class="table table-striped" cellspacing="4">
+		                     <tr>
+		                         <th>First Name</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.name"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Last Name</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.last_name"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Gender</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.gender"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Date of Birth</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.dob"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Admitted Date</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.admitted_date"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Department</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.department_id.name"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Email</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.email"/></td>
+		                     </tr>
+		                     <tr>
+		                         <th>Mobile</th>
+		                         <td>:</td>
+		                         <td><span t-field="o.mobile"/></td>
+		                     </tr>
+	                    </table>
+    				</div>
+    				<div style="float:right;" width="30%">
+    					<img t-if="not o.image_1920" t-att-src="'/web/static/src/img/user_placeholder.jpg'" height="200px" width="180px"/>
+    					<img t-if="o.image_1920" t-att-src="image_data_uri(o.image_1920)" height="200px" width="180px"/>
+    					<br/><p><b>Roll No:</b> <span t-field="o.roll_no"/></p>
+    				</div>
+    				</div>
+    				 
+    			</div>
+    		</t>
+    	</t>
+    </template>
+
+</odoo>
