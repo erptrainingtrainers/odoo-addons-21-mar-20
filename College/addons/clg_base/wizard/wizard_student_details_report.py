@@ -9,6 +9,7 @@ class Student_details_report(models.TransientModel):
     
     def print_report(self):
         data = {
+            'category':'wizard',
             'model':'wizard.student.report',
             'form':self.read()[0],
             'record_ids':self.env['clg.student'].search([('state','=',self.state)]).ids,

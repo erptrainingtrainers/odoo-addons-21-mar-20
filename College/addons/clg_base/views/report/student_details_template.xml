@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+	
+	<template id="custom_report_layout">
+			<!-- Multicompany -->
+	        <t t-if="not o and doc">
+	            <t t-set="o" t-value="doc"/>
+	        </t>
+	
+	        <t t-if="o and 'company_id' in o">
+	            <t t-set="company" t-value="o.company_id.sudo()"/>
+	        </t>
+	        <t t-if="not o or not 'company_id' in o">
+	            <t t-set="company" t-value="res_company"/>
+	        </t>
+	        
+	        <div class="header">
+	            <div class="row col-12" style="padding-top:20px;border-bottom:2px solid grey;">
+	            	<div class="col-2" style="padding-top: 20px;">
+	                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 45px;"/>
+	                </div>
+	                <div class="col-7" align="center">
+	                	<h3 t-esc="company.name"/>
+						<t t-if="company.street"><span t-esc="company.street"/>,</t>
+						<span t-esc="company.city"/>,
+						<span t-esc="company.state_id.name"/>,
+						<span t-esc="company.zip"/>
+	                </div>
+	                <div class="col-3" style="position:absolute;bottom:0px;right:0;">
+	                	Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+	                </div>
+	                <br/>
+	            </div>
+	            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+	                <div class="col-xs-12">
+	                    <div style="border-bottom: 1px solid black;"/>
+	                </div>
+	            </div>
+	        </div>
+	        
+	        <div class="article o_report_layout_standard">
+	            <t t-raw="0" />
+	        </div>
+	        <div class="footer">
+	        </div>
+	  </template>
+	
 	<template id="report_student_details">
     	<t t-call="web.html_container">
     		<t t-foreach="docs" t-as="o">
+    			<t t-call="clg_base.custom_report_layout">
     			<div class="page">
     				<style type="text/css">
     					.table tr,table td,table th{
@@ -12,16 +57,11 @@
     					span, p {
     						font-size:18px;
     					}
-    					tr {
-							page-break-inside: avoid;
-						}
     				</style>
     				<div class="oe_structure"/>
     				<center><h1>Student Details Report</h1></center>
-    				<hr/>
-    				<div class="row">
-    				<div width="60%" style="float:left">
-    					<table class="table table-striped" cellspacing="4">
+    				<hr/><div class="row">
+    					<table class="table table-striped" cellspacing="4" style="width:70%;">
 		                     <tr>
 		                         <th>First Name</th>
 		                         <td>:</td>
@@ -63,15 +103,16 @@
 		                         <td><span t-field="o.mobile"/></td>
 		                     </tr>
 	                    </table>
-    				</div>
-    				<div style="float:right;" width="30%">
+	                    <div style="width:30%;text-align: center">
     					<img t-if="not o.image_1920" t-att-src="'/web/static/src/img/user_placeholder.jpg'" height="200px" width="180px"/>
     					<img t-if="o.image_1920" t-att-src="image_data_uri(o.image_1920)" height="200px" width="180px"/>
     					<br/><p><b>Roll No:</b> <span t-field="o.roll_no"/></p>
-    				</div>
-    				</div>
-    				 
+    				 </div>
+    				 </div>
+    				 <p>The Completed student count is: <span t-esc="get_completed_records" /></p>
+    				 <p style="page-break-after:always;"/>
     			</div>
+    			</t>
     		</t>
     	</t>
     </template>

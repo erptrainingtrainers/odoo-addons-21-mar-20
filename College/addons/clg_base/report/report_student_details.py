@@ -6,21 +6,21 @@ class Student_details_report(models.AbstractModel):
     
     def get_completed_records(self):
         count = self.env['clg.student'].search_count([('state','=','completed')])
-        print(count)
         return count
     
     @api.model
     def _get_report_values(self, docids, data=None):
-        docs = self.env['clg.student'].browse(data['record_ids'])
-#         if data:
-#             docs = self.env['clg.student'].browse(data['record_ids'])
-#         else:
-#             docs = self.env['clg.student'].browse(self._context.get('active_id'))
-        return {
-            'doc_ids': self.ids,
-            'doc_model': data['model'],
-            'docs': docs,
-            'form':data['form'],
-            'get_completed_records':self.get_completed_records,
-        }
-    
+        if data.get('category',False):
+            docs = self.env['clg.student'].browse(data['record_ids'])
+            return {
+                'docs': docs,
+                'form':data['form'],
+                'get_completed_records':self.get_completed_records(),
+            }
+        else:
+            docs = self.env['clg.student'].browse(docids)
+            return {
+                'doc_ids': self.ids,
+                'docs': docs,
+                'get_completed_records':self.get_completed_records(),
+            }
