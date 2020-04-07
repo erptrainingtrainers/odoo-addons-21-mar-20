@@ -7,7 +7,7 @@
     'author': 'Training',
     'summary': 'Training',
     'description': "Training",
-    'depends': ['mail','base'
+    'depends': ['mail','base','web'
     ],
     'demo':[],
     'data': [
@@ -23,10 +23,11 @@
         'views/res_users_view.xml',
         'views/report/student_details_template.xml',
         'views/report/report.xml',
+        'views/webclient_templates.xml',
         'views/menus.xml',
         'data/data.xml',
     ],
-    'qweb':[],
+    'qweb':['static/src/xml/*.xml'],
     'images': [],
     'installable': True,
     'application': True,

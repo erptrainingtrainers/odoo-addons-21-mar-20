@@ -191,6 +191,17 @@ class Student(models.Model):
         result = super(Student, self).unlink()
         return result
     
+    
+    def get_student_details(self):
+        recs = self.sudo().search_read([],fields=['id','name','roll_no','department_id'])
+        draft_st = self.search_count([('state','=','draft')])
+        admit_st = self.search_count([('state','=','admitted')])
+        comp_st = self.search_count([('state','=','completed')])
+        dis_con_st = self.search_count([('state','=','dis-continue')])
+        stud_states = {'draft':draft_st,'admit':admit_st,'comp':comp_st,'dis-con':dis_con_st}
+        return {'students':recs,'states':stud_states}
+            
+    
 class Department(models.Model):
     _name = "clg.department"
     _description = "Department"

@@ -13,5 +13,8 @@
 		<menuitem parent="menu_action_college" name="Reports" id="menu_report_student" sequence="7"/>
 		<menuitem parent="menu_report_student" name="Student" action="action_student_report" id="menu_report_student_details" sequence="1"/>
 		
+		<!-- Dashboard -->
+		<menuitem parent="menu_action_college" name="Dashboard" action="action_student_dashboard" id="menu_action_student_dashboard" sequence="1"/>
+		
 	</data>
 </odoo>
