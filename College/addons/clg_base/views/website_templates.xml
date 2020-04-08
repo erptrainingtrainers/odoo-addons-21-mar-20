@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<template id="clg_base_assets_frontend" inherit_id="website.assets_frontend">
+	    <xpath expr="link[last()]" position="after">
+	        <link rel="stylesheet" type="text/css" href="/clg_base/static/src/css/website_style.css"/>
+	    </xpath>
+	</template>
+	
+	<template id="tmpl_college" name="College Main Form">
+		<t t-call="website.layout">
+			<div class="container-fluid">
+				<h1>Welcome to College</h1>
+				<div class="row">
+					<div class="text-center">
+						<a role="button" t-attf-href="/college/student" class="btn btn-primary btn-lg">View Student List</a>
+	                    <a role="button" t-attf-href="/college/staff/add" class="btn btn-primary btn-lg">Add Staff details</a>
+	                </div>
+				</div>
+			</div>
+		</t>
+	</template>
+	
+	<template id="tmpl_student_details" name="Student Details">
+		<t t-call="website.layout">
+			<div class="container-fluid">
+				<table class="table table-dark table-hover" style="width:60%;">
+				    <thead>
+				      <tr>
+				      	<th>Image</th>
+				        <th>First name</th>
+				        <th>Last name</th>
+				        <th>Roll No.</th>
+				        <th>Email</th>
+				        <th>Department</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				    <t t-foreach="stud_details" t-as="st">
+				    	<tr>
+				    		<td>
+				    			<img t-if="not st.image_1920" t-att-src="'/web/static/src/img/user_placeholder.jpg'" class="img-cir"/>
+    							<img t-if="st.image_1920" t-att-src="image_data_uri(st.image_1920)" class="img-cir"/>
+				    		</td>
+							<td><span t-esc="st.name"/></td>
+							<td><span t-esc="st.last_name"/></td>
+							<td><span t-esc="st.roll_no"/></td>	
+							<td><span t-esc="st.email"/></td>	
+							<td><span t-esc="st.department_id.name"/></td>				    		
+				    	</tr>
+					</t>
+				    </tbody>
+				</table>
+			</div>
+		</t>
+	</template>
+	
+	<template id="staff_create_form" name="Staff Create Form">
+		<t t-call="website.layout">
+			<div class="container-fluid">
+        <form id="staff_create_form" action="" method="post" class="s_website_form container-fluid mt32 col-lg-8" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                <div class="col-lg-3 col-md-4">
+                    <label class="col-form-label" for="Name">Name</label>
+                </div>
+                <div class="col-lg-7 col-md-8">
+                    <input type="text" class="form-control o_website_form_input" name="name" required="required"/>
+                </div>
+            </div>
+            <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                <div class="col-lg-3 col-md-4">
+                    <label class="col-form-label" for="Last Name">Last Name</label>
+                </div>
+                <div class="col-lg-7 col-md-8">
+                    <input type="text" class="form-control o_website_form_input" name="last_name" required="required"/>
+                </div>
+            </div>
+            <div class="form-group row form-field o_website_form_custom">
+                <div class="col-lg-3 col-md-4">
+                    <label class="col-form-label" for="Mobile">Mobile</label>
+                </div>
+                <div class="col-lg-7 col-md-8">
+                    <input type="text" class="form-control o_website_form_input" name="mobile"/>
+                </div>
+            </div>
+            <div class="form-group row form-field o_website_form_required_custom">
+                <div class="col-lg-3 col-md-4">
+                    <label class="col-form-label" for="email">Email</label>
+                </div>
+                <div class="col-lg-7 col-md-8">
+                    <input type="email" class="form-control o_website_form_input" name="email" required=""/>
+                </div>
+            </div>
+            <div class="form-group row form-field o_website_form_required_custom">
+            	<div class="col-lg-3 col-md-4">
+                    <label class="col-form-label" for="department">Department</label>
+                </div>
+                <div class="col-lg-7 col-md-8">
+            	<select name="department_id" class="form-control">
+                 <option>Department...</option>
+                 <t t-foreach="department or []" t-as="dept">
+                     <option class="" t-att-value="dept.id">
+                         <t t-esc="dept.name"/>
+                     </option>
+                 </t>
+             </select>
+             </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Save"/>
+                </div>
+            </div>
+        </form>
+        </div>
+        </t>
+    </template>
+	
+	<template id="staff_add_success" name="Staff Adding Success">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="alert alert-success">
+                            Staff created successfully.
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a role="button" t-attf-href="/college/staff/add" class="btn btn-primary btn-lg">Add another Staff</a>
+                </div>
+            </div>
+        </t>
+    </template>
+	
+</odoo>

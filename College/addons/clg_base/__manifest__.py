@@ -7,7 +7,7 @@
     'author': 'Training',
     'summary': 'Training',
     'description': "Training",
-    'depends': ['mail','base','web'
+    'depends': ['mail','base','web','website'
     ],
     'demo':[],
     'data': [
@@ -15,6 +15,7 @@
         'security/ir.model.access.csv',
         'data/mail_template_data.xml',
         'data/sequences.xml',
+        'data/website_data.xml',
         'wizard/wizard_student_remark.xml',
         'wizard/wizard_student_details_report.xml',
         'views/student_views.xml',
@@ -24,6 +25,7 @@
         'views/report/student_details_template.xml',
         'views/report/report.xml',
         'views/webclient_templates.xml',
+        'views/website_templates.xml',
         'views/menus.xml',
         'data/data.xml',
     ],
