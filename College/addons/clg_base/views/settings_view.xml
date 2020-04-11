@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="clg_base_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.college</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="3"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Student" string="Student" data-key="student">
+                    <h2>Student</h2>
+                    <div class="col-12 col-lg-6 o_setting_box" title="Student">
+                    	<div class="o_setting_right_pane">
+                    		<div class="row ml32">
+                                <span class="ml8 mr-2">Maximum Fee Amount for Student </span>
+                                <field name="max_fee_limit" class="ml-2 oe_inline"/>
+                            </div>
+                    	</div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="clg_base_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="clg_base_res_config_settings_view_form"/>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'clg_base'}</field>
+    </record>
+    
+</odoo>

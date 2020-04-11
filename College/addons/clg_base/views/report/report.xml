@@ -10,6 +10,16 @@
             file="clg_base.report_student_details"
             print_report_name="'%s Details' %(object.name)"
         />
+    
+    <report
+	    id="clg_student_details_xlsx"
+	    model="clg.student"
+	    string="Student Details XLSX"
+	    report_type="xlsx"
+	    name="clg_student.report_student_details_xlsx"
+	    file="student_details_xlsx"
+	/>
+    
 	<record id="paperformat_student_details" model="report.paperformat">
          <field name="name">Student Details</field>
          <field name="format">A4</field>

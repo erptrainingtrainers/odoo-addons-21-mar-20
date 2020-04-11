@@ -10,3 +10,4 @@ class Student_Remark(models.TransientModel):
     
     def action_confirm(self):
         self.student_id.write({'remarks':str(self.student_id.remarks)+self.remark})
+        self.student_id.message_post(body="This record is confirmed by %s"%(self.env.user.name),subject="Student Confirmation")

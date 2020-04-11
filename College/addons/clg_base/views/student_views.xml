@@ -16,13 +16,24 @@
 						<field name="state" widget="statusbar" statusbar_visible="draft,admitted,completed,dis-continue"/>
 					</header>
 					<sheet>
+						<widget name="web_ribbon" text="Admitted" bg_color="bg-info" attrs="{'invisible': [('state', '!=', 'admitted')]}"/>
+						<widget name="web_ribbon" text="Completed" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'completed')]}"/>
+						<widget name="web_ribbon" text="Dis-Continue" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'dis-continue')]}"/>
+						<div class="oe_title">
+                            <label for="name" string="First Name" />
+							<h1 style="width: 80%%;">
+								<field name="name" />
+							</h1>
+							<label for="last_name" string="Last Name" />
+							<h1 style="width: 80%%;">
+								<field name="last_name" />
+							</h1>
+                        </div>
 						<group>
 							<group>
-								<field name="name" />
-								<field name="last_name" />
 								<field name="roll_no" />
 								<field name="gender" widget="radio" options="{'horizontal':True}"/>
-								<field name="admitted_date" />
+								<field name="admitted_date" options="{'datepicker':{'daysOfWeekDisabled':[0,6]}}"/>
 								<field name="tc_12" />
 								<field name="height" />
 								<field name="department_id" options="{'no_create_edit':True,'no_create':True,'no_open':True}"/>
@@ -121,6 +132,8 @@
                     <field name="id"/>
                     <field name="name"/>
                     <field name="gender"/>
+                    <field name="fee_amount"/>
+                    <field name="fee_paid_progress"/>
                     <templates>
                         <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_global_click">
@@ -137,6 +150,9 @@
                                  	<li>Department: <field name="department_id"/></li>
                                  	<li>
                                  		<field name="language_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
+                                 	</li>
+                                 	<li>
+                                 		<field name="total_fee_paid" widget="gauge" options="{'max_field':'fee_amount','style': 'width:140px; height: 100px;'}"/>
                                  	</li>
                                  </ul>
                             </div>

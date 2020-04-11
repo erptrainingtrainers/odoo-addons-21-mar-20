@@ -7,7 +7,7 @@
     'author': 'Training',
     'summary': 'Training',
     'description': "Training",
-    'depends': ['mail','base','web','website'
+    'depends': ['mail','base','web','website','report_xlsx'
     ],
     'demo':[],
     'data': [
@@ -22,6 +22,7 @@
         'views/student_inherit_views.xml',
         'views/staff_views.xml',
         'views/res_users_view.xml',
+        'views/settings_view.xml',
         'views/report/student_details_template.xml',
         'views/report/report.xml',
         'views/webclient_templates.xml',

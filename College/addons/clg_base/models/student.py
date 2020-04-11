@@ -59,6 +59,12 @@ class Student(models.Model):
     user_id = fields.Many2one('res.users',string="User")
     tenth_mark = fields.Integer(string="10th Mark")
     admission_no = fields.Char(string="Admission No")
+    fee_amount = fields.Monetary(string="Fee Amount",currency_field='currency_id')
+    currency_id = fields.Many2one('res.currency',string="Currency",default=lambda self:self.env.user.company_id.currency_id.id)
+    active = fields.Boolean(string="Active?")
+    fee_paid_ids = fields.One2many('student.fee','student_id',string="Student Fee Details")
+    total_fee_paid = fields.Monetary(compute="_compute_paid_fees",string="Total Fee Paid",currency_field='currency_id')
+    fee_paid_progress = fields.Float(compute="_compute_paid_fees",string="Fee Paid Progress")
     
     def name_get(self):
         result = []
@@ -93,11 +99,28 @@ class Student(models.Model):
             if self.dob > datetime.now().date():
                 raise UserError("Sorry! The Date of birth cannot be futuristic.")
             
+    @api.constrains('fee_amount')
+    def _validate_fee_amount(self):
+        if self.fee_amount:
+            defined_fee_amount = self.env['ir.config_parameter'].sudo().get_param('clg_base.max_fee_limit')
+            if self.fee_amount > float(defined_fee_amount):
+                raise UserError("Sorry! Maximunm Fee Amount is %s."%defined_fee_amount)
+            
     @api.depends('language_ids')
     def _compute_lang_known_count(self):
         self.lang_known_count = False
         if self.language_ids:
             self.lang_known_count = len(self.language_ids)
+    
+    @api.depends('fee_paid_ids.amount')
+    def _compute_paid_fees(self):
+        self.total_fee_paid = self.fee_paid_progress = False
+        for rec in self:
+            if rec.fee_paid_ids:
+                print(sum(rec.fee_paid_ids.mapped('amount')))
+                rec.total_fee_paid = sum(rec.fee_paid_ids.mapped('amount'))
+                rec.fee_paid_progress = (sum(rec.fee_paid_ids.mapped('amount')) * 100.0) / rec.fee_amount
+            
     
     def _inverse_change_remarks(self):
         if self.remarks:
@@ -158,7 +181,13 @@ class Student(models.Model):
             "url": "https://google.com",
             "target": "new",
         }
-        
+    
+    def download_stud_details(self):
+        data = {
+            'form_view':True
+            }
+        return self.env.ref('clg_base.clg_student_details_xlsx').report_action(self,data=data)
+    
     @api.model
     def create(self,vals):
 #         vals['state'] = 'admitted'
@@ -242,4 +271,9 @@ class Education(models.Model):
     program = fields.Char(string="Progarm")
     mode = fields.Selection([('regular','Regular'),('private','Private'),('not_applicable','Not Applicable')],string="Mode")
     
+class StudentFee(models.Model):
+    _name = 'student.fee'
     
+    date = fields.Date(string="Pay Date",required=True)
+    amount = fields.Float(string="Pay Amount",required=True)
+    student_id = fields.Many2one('clg.student',string="Student")

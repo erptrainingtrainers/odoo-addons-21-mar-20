@@ -16,10 +16,32 @@
 				<xpath expr="//field[@name='tc_12']" position="replace"></xpath>
 				<xpath expr="//header" position="inside">
 					<button name="open_new_url" type="object" class="oe_highlight" icon="fa-google" string="Open"/>
+					<button name="download_stud_details" type="object" class="oe_highlight" icon="fa-file-excel-o" string="Download Xlsx"/>
 				</xpath>
-				<field name="last_name" position="after">
+				<field name="roll_no" position="after">
 					<field name="admission_no" readonly="1"/>
+					<field name="active" />
+					<field name="currency_id"/>
+					<field name="fee_amount"/>
+					<field name="total_fee_paid" />
 				</field>
+				<page name="education" position="after">
+					<page string="Fee Details" name="fee_pay">
+						<group>
+							<group>
+								<field name="fee_paid_ids" nolabel="1">
+									<tree editable="bottom">
+										<field name="date" />
+										<field name="amount" />
+									</tree>
+								</field>
+							</group>
+							<group>
+								<field name="fee_paid_progress" widget="percentpie"/>
+							</group>
+						</group>
+					</page>
+				</page>
 			</field>
 		</record>
 		
@@ -33,6 +55,7 @@
             	<field name="state" position="after">
 					<field name="email" />
 					<field name="mobile" />
+					<field name="fee_paid_progress" widget="progressbar"/>
 				</field>
             </field>
         </record>	
