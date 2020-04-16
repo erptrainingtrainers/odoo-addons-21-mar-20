@@ -9,4 +9,18 @@
 			<field name="name">Urudu</field>
 		</record>
 	</data>
+	<!-- Scheduler -->
+	<record id="ir_cron_clg_base_student" model="ir.cron">
+            <field name="name">Student: Status</field>
+            <field name="model_id" ref="model_clg_student"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.scheduler_student_status_update()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 05:00:00')" />
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+        
 </odoo>

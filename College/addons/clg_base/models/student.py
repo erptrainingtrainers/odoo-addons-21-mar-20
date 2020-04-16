@@ -188,6 +188,14 @@ class Student(models.Model):
             }
         return self.env.ref('clg_base.clg_student_details_xlsx').report_action(self,data=data)
     
+    def scheduler_student_status_update(self):
+        print("Scheduler called")
+        record_id = self.search([('state','=','draft')],limit=1)
+        print(record_id)
+        if record_id:
+            record_id.write({'state':'admitted'})
+            print("The Student-->%s is moved to Admitted state"%record_id.name)
+    
     @api.model
     def create(self,vals):
 #         vals['state'] = 'admitted'
